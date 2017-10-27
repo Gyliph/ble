@@ -1,32 +1,33 @@
 # 4970 
 ## Bluetooth LE 
-### pybluez[ble] dependencies
+### First time
 ```
-sudo apt-get install libbluetooth-dev \
-libboost-python-dev \
-libboost-thread-dev
-sudo pip install pybluez[ble]
-```
-### Scan for devices
-```
-hcitool -i hci1 lescan
-^C
+bluetoothctl
+agent on 
+default-agent
+power on 
+scan on
+[ get device MAC address ]
+scan off
+pair <addr> 
+connect <addr>
 ```
 
 ### Attempt to connect
 ```
-gattool -b DC:2A:9C:FB:8C:D3 -I
-> connect
-> primary
+sudo bluetoothctl 2>&1 | tee /tmp/bluetooth.out
+connect DC:2A:9C:FB:8C:D3 
+select-attribute /org/bluez/hci0/dev_DC_2A_9C_FB_8C_D3/service0021/char0022
+notify on
 ```
-#### Alternative 
+
+### Parse output
 ```
-hcitool -i hci1 lecc --random DC:2A:9C:FB:8C:D3
+cat /tmp/bluetooth.out | awk 'BEGIN {FS=Value:}; {print $2}'
 ```
-## Issues
 
 ## Links
+[Archlinux Wiki - Bluetooth](https://wiki.archlinux.org/index.php/bluetooth#Bluetoothctl)
+[Bluetooth LE on Raspberry Pi](https://www.elinux.org/RPi_Bluetooth_LE)
 [Bluetooth LE Quick Start](https://www.jaredwolff.com/blog/get-started-with-bluetooth-low-energy/)  
 [Bluetooth Low Energy Introduction](https://learn.adafruit.com/introduction-to-bluetooth-low-energy/introduction)  
-[Bluetooth LE on Raspberry Pi](https://www.elinux.org/RPi_Bluetooth_LE)
-
