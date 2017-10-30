@@ -23,7 +23,11 @@ notify on
 
 ### Parse output
 ```
-cat /tmp/bluetooth.out | awk 'BEGIN {FS=Value:}; {print $2}'
+./parse.pl sample_input/bluetooth.out
+```
+#### Other parsing option
+```
+awk -F ":" '{print $3}' bluetooth.out > bt.values
 ```
 
 ## Links
