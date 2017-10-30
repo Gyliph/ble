@@ -31,7 +31,9 @@ awk -F ":" '{print $3}' bluetooth.out > bt.values
 ```
 
 ## Links
-[Archlinux Wiki - Bluetooth](https://wiki.archlinux.org/index.php/bluetooth#Bluetoothctl)
-[Bluetooth LE on Raspberry Pi](https://www.elinux.org/RPi_Bluetooth_LE)
+[Archlinux Wiki - Bluetooth](https://wiki.archlinux.org/index.php/bluetooth#Bluetoothctl) 
+[Bluetooth LE on Raspberry Pi](https://www.elinux.org/RPi_Bluetooth_LE)  
 [Bluetooth LE Quick Start](https://www.jaredwolff.com/blog/get-started-with-bluetooth-low-energy/)  
 [Bluetooth Low Energy Introduction](https://learn.adafruit.com/introduction-to-bluetooth-low-energy/introduction)  
+[PerlMonks hex2ascii](http://www.perlmonks.org/?node_id=727226)  
+
