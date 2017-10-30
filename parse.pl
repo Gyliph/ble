@@ -28,11 +28,19 @@ while(<$fh_r>) {
 	}
 }
 
+chop(@lines); # Remove newline
+chop(@lines); # Remove trailing '|'
+
 # @lines is now a csv of x-accel,y-accel,z-accel in m/s^2
 # E.g. |0.00|0.00|9.5|
-foreach(@lines) {
-	print $_;
+foreach(@lines) { 
+	my $line = substr $_, 2;
+	$line =~ s/\|/\,/g;
+	print "$line\n";
+
 }
+
+
 
 
 
