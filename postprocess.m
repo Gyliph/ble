@@ -16,13 +16,23 @@ x = data_filtered(:,1);
 y = data_filtered(:,2);
 window_width = 30;
 window_increment = 1;
-num_steps = (length(data_filtered)-window_width+1);
+num_steps = (length(data_filtered)-window_width+1)-1;
 for i = 1:window_increment:num_steps;
-	xe = sumsq(x(i:i+window_width));
-	ye = sumsq(y(i:i+window_width));
+	xe(i,1) = sumsq(x(i:i+window_width));
+	ye(i,1) = sumsq(y(i:i+window_width));
 end
 
+% find peaks
 [pks_x idx_x] = findpeaks(xe);
 [pks_y idx_y] = findpeaks(ye);
 
-plot(xe);
+% plot peaks on top of signal
+subplot(1,2,1);
+plot(xe, 'b', idx_x, pks_x, '.r');
+
+subplot(1,2,2);
+plot(ye, 'b', idx_y, pks_y, '.r');
+
+% todo - pulse rate estimation from peaks 
+% detect and throwout outliers  
+%  -> check if pulse rate estimate is too far away from moving pulse rate value
