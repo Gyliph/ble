@@ -6,25 +6,23 @@ data = csvread('csv.out');
 
 % m(n) = r(n) + g(n) + epsilon(n)
 % transducer = resp + bcg + noise
-x = data(:,1);
-y = data(:,2);
-z = data(:,3);
 
 % butterworth filter 6th order 
-% 3-dB cutoff freq 0.7Hz to 10Hz
-% butter(n, Wn, ftype) => order is 2n, 
-n = 6;    % Order
-% 1 Hz = 2*pi rads/sec
-fc1 = 4.39822971; % 0.7 Hz
-fc2 = 62.831853;  % 10 Hz
-Wn = [fc1 fc2];
-ftype = 'bandpass';
+% 3-dB cutoff freq 0.7Hz to 10Hz - 100hz sample rate
 
 [b a] = butter(6, [0.7 10]/(100/2));
-x_filtered = filter(b,a,data);
+data_filtered = filter(b,a,data);
+x = data_filtered(:,1);
+y = data_filtered(:,2);
+window_width = 30;
+window_increment = 1;
+num_steps = (length(data_filtered)-window_width+1);
+for i = 1:window_increment:num_steps;
+	xe = sumsq(x(i:i+window_width));
+	ye = sumsq(y(i:i+window_width));
+end
 
-figure;
-plot(x_filtered);
+[pks_x idx_x] = findpeaks(xe);
+[pks_y idx_y] = findpeaks(ye);
 
-figure;
-plot(data);
+plot(xe);
